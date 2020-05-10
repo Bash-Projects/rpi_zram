@@ -9,10 +9,15 @@ Automatically detects the number of CPU cores to allocate to ZRAM computation, d
 
 > sudo chmod +x /usr/bin/zram.sh
 
-> echo -e "#!/bin/bash \n /usr/bin/zram.sh &" >  /home/marc/scripts/zram.sh
-
 Sustituye usuario por tu usuario
+
+> echo -e '#!/bin/bash\n/usr/bin/zram.sh &' > /home/usuario/scripts/zram.sh
+
+Añadir al cron mediante crontab -e
+
 > @reboot ( sleep 50 ; sudo /home/usuario/scripts/zram.sh )
+
+Reinicar para probar el script
 
 > sudo reboot now
 
@@ -29,3 +34,11 @@ edit /etc/rc.local file to run script on boot
 
 add line before exit 0
 > /usr/bin/zram.sh &
+
+## Opcional
+Se puede deshabilitar el montaje predeterminado de la swap ya que el script la anula en cada ejecución
+>systemctl disable dphys-swapfile.service
+
+Para comprobar que el script funciona ejecutar
+> swapon --output-all
+> free -h
